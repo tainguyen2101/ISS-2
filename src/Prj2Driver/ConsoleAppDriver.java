@@ -1,4 +1,9 @@
+package Prj2Driver;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
+
+import WSAdapter.WS1Adapter;
 
 /*
  * TCSS Software Development 360
@@ -27,6 +32,20 @@ public class ConsoleAppDriver {
 		int inputVal = input.nextInt();
 		switch(inputVal) {
 			case 1 :
+				WS1Adapter adapter = new WS1Adapter();
+				adapter.generateData();
+				Scanner input2 = null;
+				try {
+					input2 = new Scanner(new File("WeatherStation1.txt"));
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+				//For sake of testing, print the first 5 lines of data
+				int i = 0;
+				while (input2.hasNextLine() && (i < 5)) {
+					i++;
+					System.out.println(input2.nextLine());
+				}
 				//display weather station 1 info
 				break;
 			case 2 :
