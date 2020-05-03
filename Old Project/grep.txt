@@ -1,0 +1,4 @@
+# rain rate takes average of last 3 data points:
+grep -E  'rain'	exampleOutput.txt
+# heat index takes most recent temp + humidity
+grep -E  'temp|humid|heat'  exampleOutput.txt

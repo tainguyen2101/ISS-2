@@ -1,0 +1,10 @@
+README:
+
+1) How to run:
+ a) Acquire Files:
+   a1) download zip file
+   a2) unzip zip file.
+ b) Get Eclipse set up
+   b1) Open Eclipse
+   b2) File -> Import -> General -> Projects from Folder or Archive -> Directory -> (select the file you unzipped).
+ 
