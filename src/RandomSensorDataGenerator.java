@@ -118,15 +118,15 @@ public class RandomSensorDataGenerator {
 	/**
 	 * Generate the data that will be transferred to the ISS when read from OutSide.txt.
 	 */
-	public void createISSData() {   //// createISSData method writes Randomized ISS Sensor Data into OutSide.txt
+	public void createISSData(String Outside, String Inside) {   //// createISSData method writes Randomized ISS Sensor Data into OutSide.txt
 		Calendar now = Calendar.getInstance();
 		milTime = now.get(Calendar.HOUR_OF_DAY) * 100;
 
 		setInitialOutValues();
 
 		try {
-			printout = new PrintStream("OutSide.txt");
-			printin = new PrintStream("InSide.txt");
+			printout = new PrintStream(Outside);
+			printin = new PrintStream(Inside);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -221,8 +221,8 @@ public class RandomSensorDataGenerator {
 	/**
 	 * Print data read from the text file to the console.
 	 */
-	public void printDataToConsole() {
-		File file = new File("OutSide.txt");
+	public void printDataToConsole(String FileName) {
+		File file = new File(FileName);
 		Scanner inFile = null;
 		System.out.println("ISS Sensor Data");
 		System.out.println("Time\t\tWindDirection\t\tWindSpeed\t\tTempOut\t\tHumOut\t\tBarometer\t\tRainRate");
