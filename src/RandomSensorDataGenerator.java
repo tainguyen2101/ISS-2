@@ -133,21 +133,21 @@ public class RandomSensorDataGenerator {
 
 		for (int i = 0; i < intervals; i++) {
 
-			printout.print((int) (milTime) + ",");
+			printout.print((int) (milTime) + " ");
 
 			int windDirectionOffset = random.ints(-5, (5)).findFirst().getAsInt(); //Wind direction offset plus minus 5
 			mywindDirection = (360 + mywindDirection + windDirectionOffset) % 360;
-			printout.print(mywindDirection + ",");
+			printout.print(mywindDirection + " ");
 
 
 			int windSpeedOffset = random.ints(-1, (2)).findFirst().getAsInt();    //Wind speed offset plus minus 1
 			myWindSpeed = (Math.abs(myWindSpeed + windSpeedOffset)) % 25;
-			printout.print(myWindSpeed + ",");
+			printout.print(myWindSpeed + " ");
 
 
 			int tempOffset = random.ints(-20, (20)).findFirst().getAsInt();            // Temp Offset plus minus 1
 			myTempOut = (int) (250 * Math.sin(Math.PI * milTime / 1200) + 650 + tempOffset);  // OutSide temp Cyclic
-			printout.print(myTempOut + ",");
+			printout.print(myTempOut + " ");
 
 
 			int humOutOffset = random.ints(-1, (2)).findFirst().getAsInt();     // humidity Offset
@@ -155,7 +155,7 @@ public class RandomSensorDataGenerator {
 			if (myHumOut > 1000) {
 				myHumOut = myHumOut - 10;
 			}
-			printout.print(myHumOut + ",");
+			printout.print(myHumOut + " ");
 
 
 			int BarometerOffset = random.ints(-1, (2)).findFirst().getAsInt();        // Barometer Offset
@@ -166,7 +166,7 @@ public class RandomSensorDataGenerator {
 			if (myBarometer > 320) {
 				myBarometer = myBarometer - 10;
 			}
-			printout.print(myBarometer + ",");
+			printout.print(myBarometer + " ");
 
 
 			int rainRateOffset = random.ints(-1, (2)).findFirst().getAsInt(); // Temp Offset plus minus 1
@@ -200,9 +200,9 @@ public class RandomSensorDataGenerator {
 		}
 
 		for (int i = 0; i < intervals; i++) {
-			printin.print((int) (milTime) + ",");
+			printin.print((int) (milTime) + " ");
 			myTempIn = (int) (50 * Math.sin(Math.PI * milTime / 1200) + 750); // InSide temp Cyclic
-			printin.print(myTempIn + ",");
+			printin.print(myTempIn + " ");
 
 
 			int humOutOffset = random.ints(-1, (2)).findFirst().getAsInt();
@@ -234,7 +234,7 @@ public class RandomSensorDataGenerator {
 		}
 
 		for (int i = 0; i < intervals; i++) {
-			String[] data = inFile.nextLine().split(",");
+			String[] data = inFile.nextLine().split(" ");
 
 			System.out.println(data[0] + "\t\t" + data[1] + " degrees\t\t" + data[2] + " mph\t\t\t" +
 					Double.parseDouble(data[3]) / 10 + " F\t\t" + Double.parseDouble(data[4]) / 10 + " %\t\t" +
