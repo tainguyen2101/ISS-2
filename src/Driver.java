@@ -6,11 +6,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import sensors.HumiditySensor;
-import sensors.RainSensor;
-import sensors.SensorInterface;
-import sensors.TemperatureSensor;
-import sensors.WindSensor;
+import sensors.*;
 
 public class Driver {
 
@@ -18,24 +14,36 @@ public class Driver {
 
     public static void main(String[] args) throws Exception {
         Scanner input = new Scanner(System.in);
+        RandomSensorDataGenerator generator = new RandomSensorDataGenerator();
+        Driver run = new Driver();
 
-        System.out.print("Choose a weather station: ");
-        String stationNumber = input.nextLine();
-
-        ArrayList<RandomSensorDataGenerator> generators = new ArrayList<>();
-        for (int i = 0; i <= 5; i++) {
-            generators.add(new RandomSensorDataGenerator());
-        }
         String[][] fileArray = { { "Outside1.txt", "Inside1.txt" }, { "Outside2.txt", "Inside2.txt" },
                 { "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" },
                 { "Outside5.txt", "Inside5.txt" } };
-        generators.get(Integer.parseInt(stationNumber)).createISSData(fileArray[Integer.parseInt(stationNumber) - 1][0],
-                fileArray[Integer.parseInt(stationNumber) - 1][1]);
-        generators.get(Integer.parseInt(stationNumber))
-                .printDataToConsole(fileArray[Integer.parseInt(stationNumber) - 1][0]);
-        new Driver().updateData(10, new File(fileArray[Integer.parseInt(stationNumber)-1][0]));
-        Files.delete(Paths.get(fileArray[Integer.parseInt(stationNumber) - 1][0]));
-        Files.delete(Paths.get(fileArray[Integer.parseInt(stationNumber) - 1][1]));
+
+        //Generate data, initialize sensors.
+        for (int i = 0; i < 5; i++) {
+            generator.createISSData(fileArray[i][0], fileArray[i][1]);
+            run.updateData(10, new File(fileArray[i][0]));
+        }
+        //User input for weather station
+        boolean done = false;
+        while (!done) {
+            System.out.print("Choose a weather station: ");
+            String stationNumber = input.nextLine();
+            generator.printDataToConsole(fileArray[Integer.parseInt(stationNumber) - 1][0]);
+            System.out.print("Another Station? (y/n) ");
+            String keepRun = input.nextLine();
+            if (keepRun.compareTo("y") != 0) {
+                done = true;
+            }
+        }
+
+        //File deletion
+        for (int i = 0; i < 5; i++) {
+            Files.delete(Paths.get(fileArray[i][0]));
+            Files.delete(Paths.get(fileArray[i][1]));
+        }
         input.close();
     }
 
