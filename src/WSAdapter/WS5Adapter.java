@@ -57,23 +57,45 @@ public class WS5Adapter {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			String onlyData = "";
-			String[] data = new String[] {" "};
+			String[][] data = new String[50][4];
+			input.nextLine();
 			int i = 0;
 			while(input.hasNextLine()) {
-				onlyData = filterWord(input.nextLine());
-				data[i] = onlyData;
-				output.print(data[i] + " ");
-//				String data = "";
-//				int i = 0;
-//				if (i < 5) {
-//					data += onlyData;
-//					data += " ";
-//					String[] vals = data.split(" ");
-//					output.print(onlyData + " ");
-//					i = 0;
-//				}
+				String onlyData = "";
+				String next = input.nextLine();
+				boolean rain = next.contains("rainfall");
+				boolean temp = next.contains("temperature");
+				boolean humid = next.contains("humidity");
+				boolean wind = next.contains("wind speed");
+				onlyData = filterWord(next);
+				if (rain == true) {
+					data[i][0] = onlyData;
+					output.print(data[i][0] + " ");
+				} else if (temp == true) {
+					data[i][1] = onlyData;
+					output.print(data[i][1] + " ");
+				} else if (humid == true) {
+					data[i][2] = onlyData;
+					output.print(data[i][2] + " ");
+				} else if (wind == true) {
+					data[i][3] = onlyData;
+					output.print(data[i][3] + "\n");
+				} else {
+					onlyData = "";
+				}
+				i++;
 			}
+			
+//			String[] data = new String[] {""};
+//			input.nextLine();
+//			while(input.hasNextLine()) {
+//				int i = 0;
+//				String onlyData = "";
+//				onlyData = filterWord(input.nextLine());
+//				data[i] = onlyData;
+//				output.print(data[i] + " ");
+//				i++;
+//			}
 			input.close();
 	}
 	
@@ -81,58 +103,18 @@ public class WS5Adapter {
 		final String lowerWord = theWord.toLowerCase();
 		String cleanword = "";
 		int index = 0;
-		while (index < lowerWord.length()) {
-			if (Character.isDigit(lowerWord.charAt(index))) {
-				cleanword += lowerWord.charAt(index);
+		boolean letter = lowerWord.contains("wireless");
+		if (letter == true) {
+			return cleanword += "\n";
+		} else {
+			while (index < lowerWord.length()) {
+				if (Character.isDigit(lowerWord.charAt(index))) {
+					cleanword += lowerWord.charAt(index);
+				}
+				index++;
 			}
-			index++;
+			return cleanword;
 		}
-		return cleanword;
 	}
-	
-//	private void correctFileIO() {
-//		Scanner scOutside = null;
-//		PrintStream output = null;
-//		File formattedFile = null;
-//		
-//			try {
-//				formattedFile = new File("OutSide.txt"); 
-//				scOutside = new Scanner(formattedFile);
-//				output = new PrintStream("Weather Station 5.txt");
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			while(scOutside.hasNextLine()) {
-//				String line = scOutside.nextLine();
-//				String[] vals = line.split(",");
-//				
-//				// add WindSpeed to file
-//				output.print(vals[2] + " ");
-//				
-//				// add windDirection to file 
-//				output.print(vals[1] + " ");
-//				
-//				//add temperature
-//				output.print(vals[3] + " ");
-//				
-//				//add Humidity
-//				output.print(vals[4] + " ");
-//				
-//				//add barometric pressure
-//				output.print(vals[5] + " ");
-//				
-//				//add myRainRate
-//				int rainFall = Integer.parseInt(vals[6]);
-//				if (rainFall < 60) {
-//					output.print(0 + "\n");
-//				} else if (rainFall >= 60 && rainFall < 80) {
-//					output.print(1 + "\n");
-//				} else if (rainFall >= 80 && rainFall < 100) {
-//					output.print(2 + "\n");
-//				} else {
-//					output.print(3 + "\n");
-//				}
-//				
-//			}
-//	}
+
 }
