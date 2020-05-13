@@ -47,6 +47,12 @@ public class Driver {
         input.close();
     }
 
+    /**
+     * This function read the data from text file and split them for initializing all sensor class.
+     * @param timeInterval update once every timeInterval
+     * @param theOut Outside.txt to read
+     * @throws Exception catch Exception
+     */
     private void updateData(int timeInterval, File theOut/* , File theIn */) throws Exception {
         BufferedReader outRdr = new BufferedReader(new FileReader(theOut));
         // BufferedReader inRdr = new BufferedReader(new FileReader(theIn));
