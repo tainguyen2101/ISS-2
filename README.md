@@ -6,7 +6,7 @@ New:
 
    5 weather staion at different time interval
    5 different thread for each station
-        These thread does not sleep because update interval is define in another function
+   These thread does not sleep because update interval is define in another function
 
 Need to fix:
 
