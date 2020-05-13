@@ -41,9 +41,9 @@ public class TemperatureSensor implements SensorInterface {
     /**
      * The format of the temperature values. This in accordance with the 
      * given limits for the inner and outer temperatures as well as the 
-     * listed "resolution" of the data, which is 0.1°F. 
+     * listed "resolution" of the data, which is 0.1ï¿½F. 
      */
-    private static final DecimalFormat TEMP_FORMAT = new DecimalFormat("###.#°F");
+    private static final DecimalFormat TEMP_FORMAT = new DecimalFormat("###.#ï¿½F");
     
     /**
      * The temperature inside the house (in degrees Fahrenheit)
@@ -57,8 +57,8 @@ public class TemperatureSensor implements SensorInterface {
     
     /**
      * The default constructor. The sensor starts with an inside 
-     * temperature of 75°F and an outside temperature of 
-     * 42°F. 
+     * temperature of 75ï¿½F and an outside temperature of 
+     * 42ï¿½F. 
      */
     
     /**
@@ -81,13 +81,13 @@ public class TemperatureSensor implements SensorInterface {
     
     /**
      * The primary constructor. It allows the sensor to be set to 
-     * some initial temperatures (in °F).
+     * some initial temperatures (in ï¿½F).
      * 
      * An IllegalArgument Exception will be thrown under the following
      * conditions:
      * <ul>
-     *     <li>tIn is less than 32°F or greater than 140°F</li>
-     *     <li>tOut is less than -40°F or greater than 150°F</li>
+     *     <li>tIn is less than 32ï¿½F or greater than 140ï¿½F</li>
+     *     <li>tOut is less than -40ï¿½F or greater than 150ï¿½F</li>
      * </ul>
      * 
      * @param tIn - The initial inner temperature
@@ -123,7 +123,7 @@ public class TemperatureSensor implements SensorInterface {
         } else if (temperatureIn > INNER_TEMP_MAX_RANGE) {
             temperatureIn = INNER_TEMP_MAX_RANGE;
         }
-        temperatureInArchieve.add(temperatureIn);
+        //temperatureInArchieve.add(temperatureIn);
         
         temperatureOut += (Math.random() * 2) - 1;
         if (temperatureOut < OUTER_TEMP_MIN_RANGE) {
@@ -131,7 +131,7 @@ public class TemperatureSensor implements SensorInterface {
         } else if (temperatureOut > OUTER_TEMP_MAX_RANGE) {
             temperatureOut = OUTER_TEMP_MAX_RANGE;
         }
-        temperatureOutArchieve.add(temperatureOut);
+        //temperatureOutArchieve.add(temperatureOut);
         
         String outerTempString = TEMP_FORMAT.format(temperatureOut);
         String innerTempString = TEMP_FORMAT.format(temperatureIn);

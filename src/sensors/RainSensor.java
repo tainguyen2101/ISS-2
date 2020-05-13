@@ -58,12 +58,12 @@ public class RainSensor implements SensorInterface {
      * Returns the amount of rainfall as a string
      */
     public String getData() {
-        if (Math.random() > 0.9) {
-            currentRainfall = Math.random() * 0.04;
-        } else {
-            currentRainfall = 0;
-        }
-        currentRainfallArchieve.add(currentRainfall);
+        //if (Math.random() > 0.9) {
+        //    currentRainfall = Math.random() * 0.04;
+        //} else {
+        //    currentRainfall = 0;
+        //}
+        //currentRainfallArchieve.add(currentRainfall);
         return "{rainfall: " + RAINFALL_FORMAT.format(currentRainfall) + "}";
     }
     

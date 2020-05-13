@@ -43,7 +43,7 @@ public class RandomSensorDataGenerator {
 	/**
 	 * How often the program prints the data to the lists.
 	 */
-	public static int intervals = 5;   /// Interval is how many data point the Program prints to lists and represents minutes. 2400 hrs = 1 day of data.
+	public static int intervals = 10;   /// Interval is how many data point the Program prints to lists and represents minutes. 2400 hrs = 1 day of data.
 
 	/**
 	 * Variable to store military time.
