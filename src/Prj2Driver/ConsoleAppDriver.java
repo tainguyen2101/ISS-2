@@ -58,21 +58,27 @@ public class ConsoleAppDriver {
 				//display weather station 4 info
 				break;
 			case 5 :
-				WS5Adapter adapter = new WS5Adapter();
-				adapter.generateData();
-				Scanner input2 = null;
-				try {
-					input2 = new Scanner(new File("WeatherStation5.txt"));
-				} catch(IOException e) {
-					e.printStackTrace();
-				}
-				//For sake of testing, print the first 5 lines of data
-				int i = 0;
-				while (input2.hasNextLine() && (i < 5)) {
-					i++;
-					System.out.println(input2.nextLine());
-				}
-				//display weather station 5 info
+		        WS5Adapter ws5Adapter = new WS5Adapter();
+		        ws5Adapter.generateData();
+
+		        Scanner scanner = null;
+		        try {
+		          File file = new File("WeatherStation5.txt");
+		          scanner = new Scanner(file);
+		        } catch(IOException exception) {
+		          exception.printStackTrace();
+		        }
+		        
+		        //For sake of testing, print the first 5 lines of data
+		        int i = 0;
+		        while (scanner.hasNextLine() && (i < 5)) {
+		            i++;
+		            System.out.println(scanner.nextLine());
+		        }
+		        
+		        //display weather station 5 info
+		        
+		        scanner.close();
 				break;
 			default :
 				System.out.println("Wrong input\n");
