@@ -1,5 +1,10 @@
 # TCSS 360 Project 2
 
+## May 14 2020
+
+### New
+* runStation() for 5 thread and user input. This decouple and simplify main method.
+
 ## May 13 2020 Update 2
 
 ### New
