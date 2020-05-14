@@ -11,11 +11,11 @@ import sensors.*;
 public class Driver {
 
     // Update time interval
-    private static int UPDATE_INTERVAL_S1 = 10000; // 1 minute = 60000;
-    private static int UPDATE_INTERVAL_S2 = 20000;
-    private static int UPDATE_INTERVAL_S3 = 30000;
-    private static int UPDATE_INTERVAL_S4 = 40000;
-    private static int UPDATE_INTERVAL_S5 = 50000;
+    private static int UPDATE_INTERVAL_S1 = 1000; // 1 minute = 60000;
+    private static int UPDATE_INTERVAL_S2 = 2000;
+    private static int UPDATE_INTERVAL_S3 = 3000;
+    private static int UPDATE_INTERVAL_S4 = 4000;
+    private static int UPDATE_INTERVAL_S5 = 5000;
 
     // Data Storage for each station
     private static ArrayList<SensorInterface> myData1 = new ArrayList<>();
@@ -160,7 +160,6 @@ public class Driver {
         // BufferedReader inRdr = new BufferedReader(new FileReader(theIn));
         // String dataIn = inRdr.readLine();
         String dataOut;
-
         while (/* dataIn != null && */ (dataOut = outRdr.readLine()) != null) {
             // String[] inDataArray = dataIn.split(" ", 3);
             final String[] outDataArray = dataOut.split(" ", 7);
@@ -187,9 +186,16 @@ public class Driver {
                 }
             }
             System.out.println(theStationName);
-            for (int i = 0; i < 4; i++) {
-                System.out.println(theDataSet.get(i).getData());
+            if (theDataSet.size() > 4) {
+                for (int i = theDataSet.size(); i < theDataSet.size() + 4; i++) {
+                    System.out.println(theDataSet.get(i).getData());
+                }
+            } else {
+                for (int i = 0; i < 4; i++) {
+                    System.out.println(theDataSet.get(i).getData());
+                }
             }
+            theDataSet.clear();
             System.out.println();
             synchronized (this) {
                 this.wait(timeInterval);
