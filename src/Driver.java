@@ -4,17 +4,18 @@ import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import sensors.*;
 
 public class Driver {
 
     // Update time interval
-    private static int UPDATE_INTERVAL_S1 = 1000; // 1 minute = 6000;
-    private static int UPDATE_INTERVAL_S2 = 2000;
-    private static int UPDATE_INTERVAL_S3 = 3000;
-    private static int UPDATE_INTERVAL_S4 = 4000;
-    private static int UPDATE_INTERVAL_S5 = 5000;
+    private static int UPDATE_INTERVAL_S1 = 10000; // 1 minute = 60000;
+    private static int UPDATE_INTERVAL_S2 = 20000;
+    private static int UPDATE_INTERVAL_S3 = 30000;
+    private static int UPDATE_INTERVAL_S4 = 40000;
+    private static int UPDATE_INTERVAL_S5 = 50000;
 
     // Data Storage for each station
     private static ArrayList<SensorInterface> myData1 = new ArrayList<>();
@@ -23,11 +24,13 @@ public class Driver {
     private static ArrayList<SensorInterface> myData4 = new ArrayList<>();
     private static ArrayList<SensorInterface> myData5 = new ArrayList<>();
 
+    
     private static String[][] myFileArray = { { "Outside1.txt", "Inside1.txt" }, { "Outside2.txt", "Inside2.txt" },
             { "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, { "Outside5.txt", "Inside5.txt" } };
 
     public static void main(final String[] args) throws Exception {
         final RandomSensorDataGenerator generator = new RandomSensorDataGenerator();
+        final Scanner input = new Scanner(System.in);
 
         // generate 5 set of data for 5 weather station
         for (int i = 0; i < 5; i++) {
@@ -39,9 +42,9 @@ public class Driver {
 
             @Override
             public void run() {
-                Driver run = new Driver();
+                Driver run1 = new Driver();
                 try {
-                    run.updateData("STATION 1", UPDATE_INTERVAL_S1, new File(myFileArray[0][0]), myData1);
+                    run1.updateData("STATION 1", UPDATE_INTERVAL_S1, new File(myFileArray[0][0]), myData1);
 
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
@@ -55,9 +58,9 @@ public class Driver {
 
             @Override
             public void run() {
-                Driver run = new Driver();
+                Driver run2 = new Driver();
                 try {
-                    run.updateData("STATION 2", UPDATE_INTERVAL_S2, new File(myFileArray[1][0]), myData2);
+                    run2.updateData("STATION 2", UPDATE_INTERVAL_S2, new File(myFileArray[1][0]), myData2);
 
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
@@ -70,9 +73,9 @@ public class Driver {
         final Thread station3 = new Thread() {
             @Override
             public void run() {
-                Driver run = new Driver();
+                Driver run3 = new Driver();
                 try {
-                    run.updateData("STATION 3", UPDATE_INTERVAL_S3, new File(myFileArray[2][0]), myData3);
+                    run3.updateData("STATION 3", UPDATE_INTERVAL_S3, new File(myFileArray[2][0]), myData3);
 
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
@@ -86,9 +89,9 @@ public class Driver {
 
             @Override
             public void run() {
-                Driver run = new Driver();
+                Driver run4 = new Driver();
                 try {
-                    run.updateData("STATION 4", UPDATE_INTERVAL_S4, new File(myFileArray[3][0]), myData4);
+                    run4.updateData("STATION 4", UPDATE_INTERVAL_S4, new File(myFileArray[3][0]), myData4);
 
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
@@ -102,9 +105,9 @@ public class Driver {
 
             @Override
             public void run() {
-                Driver run = new Driver();
+                Driver run5 = new Driver();
                 try {
-                    run.updateData("STATION 5", UPDATE_INTERVAL_S5, new File(myFileArray[4][0]), myData5);
+                    run5.updateData("STATION 5", UPDATE_INTERVAL_S5, new File(myFileArray[4][0]), myData5);
 
                     System.out.println();
                 } catch (Exception e) {
@@ -113,18 +116,34 @@ public class Driver {
                 }
             }
         };
+        //Start the station.
+        //station1.start();
 
-        station1.start();
-        station2.start();
-        station3.start();
-        station4.start();
-        station5.start();
+        System.out.print("Weather Station? ");
+        String inputNumber = input.nextLine();
+        int stationNumber = Integer.parseInt(inputNumber);
+        if (stationNumber == 1) {
+            station1.start();
+        } else if (stationNumber == 2) {
+            station2.start();
+        } else if (stationNumber == 3) {
+            station3.start();
+        } else if (stationNumber == 4) {
+            station4.start();
+        } else if (stationNumber == 5) {
+            station5.start();
+        } else {
+            System.out.println("Station number is from 1 - 5");
+        }
+        
+        
 
         // File deletion
         for (int i = 0; i < 5; i++) {
             Files.delete(Paths.get(myFileArray[i][0]));
             Files.delete(Paths.get(myFileArray[i][1]));
         }
+        input.close();
     }
 
     /**
