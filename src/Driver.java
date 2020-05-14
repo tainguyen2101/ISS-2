@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -9,6 +10,10 @@ import java.util.Scanner;
 
 import sensors.*;
 
+/**
+ * Driver class.
+ * @author Ford Nguyen.
+ */
 public class Driver {
 
     // Update time interval
@@ -98,7 +103,7 @@ public class Driver {
 
     /**
      * Create 5 threads for 5 stations
-     * Define what each thread will run based on the station
+     * Define what each thread will run based on the stationte
      */
     private static void runStation() {
         final RandomSensorDataGenerator generator = new RandomSensorDataGenerator();

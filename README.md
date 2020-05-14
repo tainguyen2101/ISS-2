@@ -4,6 +4,7 @@
 
 ### New
 * runStation() for 5 thread and user input. This decouple and simplify main method.
+* Layout for GUI created.
 
 ## May 13 2020 Update 2
 
