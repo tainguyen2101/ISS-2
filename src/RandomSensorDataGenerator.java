@@ -187,14 +187,14 @@ public class RandomSensorDataGenerator {
 	/**
 	 * Create the data that will be transferred to the Envoy when read from InSide.txt.
 	 */
-	public void createEnvoyData() {         //// createEnvoyData method writes Randomized Envoy Sensor Data into InSide.txt
+	public void createEnvoyData(String Inside) {         //// createEnvoyData method writes Randomized Envoy Sensor Data into InSide.txt
 		Calendar now = Calendar.getInstance();
 		milTime = now.get(Calendar.HOUR_OF_DAY) * 100;
 		setInitialInValues();
 
 
 		try {
-			printin = new PrintStream("InSide.txt");
+			printin = new PrintStream(Inside);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
