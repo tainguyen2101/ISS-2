@@ -10,6 +10,7 @@ package WSAdapter;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -18,6 +19,16 @@ import java.util.Scanner;
  * @author Melinda Tran
  */
 public class WS5Adapter {
+	
+  
+  	// Formatted Data: Wind Speed, Wind Direction, Temperature, Humidity, Barometric Pressure, Rain rate
+  	// What I have currently: Rainfall, Temperature, Humidity, Wind Speed
+	// Goal: Switch Rainfall and Wind Speed to correct position and add Wind Direction and Barometric Pressure
+  	// Wind speed, wind direction, temperature, humidity, barometric pressure, and rainfall
+  
+	private static final int max = 360; // 360
+	private static final int min = 1; // 1
+	private static Random rand = new Random();
 
 	/**
 	 * Prints to the WeatherStation5.txt file of the weather data formatted into a matrix.
@@ -33,19 +44,33 @@ public class WS5Adapter {
 		} catch (IOException exception) {
 			exception.printStackTrace();
 		}
+      
+      	int weatherDataPoints = 6;
+      	int[] weatherData = new int[weatherDataPoints];
 
 		int lineNumber = 0;
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
-
 			if (lineNumber % 6 != 0 && lineNumber % 6 != 5) {
-				String weatherData = filterWord(line);
-				printStream.print(weatherData + " ");
+				int data = filterWord(line);
+              	if (lineNumber % 6 == 1) { // rainfall [5] and barometric pressure [4]
+                	weatherData[4] = barometricPressure();
+                  	weatherData[5] = data;
+                } else if (lineNumber % 6 == 4) { // wind speed [0] and wind direction [1]
+                	weatherData[0] = data;
+                  	weatherData[1] = windDirection();
+                } else { // temperature [1] and humidity [2]
+                  	weatherData[lineNumber % 6] = data;
+                }
+              	
 				if (lineNumber % 6 == 4) {
-					printStream.print("\n");
+					String result = "";
+                  	for (int weatherPoint : weatherData) {
+                    	result += weatherPoint + " ";
+                    }
+                  	printStream.print(result + "\n");
 				}
 			}
-
 			lineNumber++;
 		}
 
@@ -54,10 +79,28 @@ public class WS5Adapter {
 	}
 
 	/**
+	 * Generate the wind direction.
+	 * 
+	 * @return a random integer for wind direction.
+	 */
+	public int windDirection() {
+		return  rand.nextInt(max + 1 - min) + min; // [1, 360]
+	}
+	
+	/**
+	 * Generate the barometric pressure.
+	 * 
+	 * @return a random integer for barometric pressure.
+	 */
+	public static int barometricPressure() {
+        return rand.nextInt(100);
+    }
+	
+	/**
 	 * Filters the provided string input for the weather data at the end of the line.
 	 */
-	public static String filterWord(String line) {
+	public static int filterWord(String line) {
 		String[] arguments = line.split(" ");
-		return arguments[arguments.length - 1];
+		return Integer.valueOf(arguments[arguments.length - 1]);
 	}
 }
