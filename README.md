@@ -4,10 +4,12 @@
 
 ### New
 * GUI updated with graph and compass layout
-* Inner class created to support multiple tabs displaying the same component
+* GUI is updated by a thread through a method
+* 5 Thread running and update the 5 tabs on GUI
 
 ### Future Implementation
-* A way for 5 thread to run with 5 tabs in the GUI
+* Format the data (data right now come in raw eg. 100 200, need to be divided by 10 or 100)
+* Graph implementation
 
 ## May 14 2020
 

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import sensors.*;
 
@@ -30,18 +29,18 @@ public class Station {
     private static ArrayList<SensorInterface> myData4 = new ArrayList<>();
     private static ArrayList<SensorInterface> myData5 = new ArrayList<>();
 
+    private static GUI theGUI;
+
     private static String[][] myFileArray = { { "Outside1.txt", "Inside1.txt" }, { "Outside2.txt", "Inside2.txt" },
             { "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, { "Outside5.txt", "Inside5.txt" } };
 
-    public static void main(final String[] args) throws IOException {
-        
-        
-        runStation();
-
-        // File deletion
-        for (int i = 0; i < 5; i++) {
-            Files.delete(Paths.get(myFileArray[i][0]));
-            Files.delete(Paths.get(myFileArray[i][1]));
+    public static void main(String[] args) {
+        try {
+            theGUI = new GUI();
+            runStation();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
@@ -54,14 +53,15 @@ public class Station {
      * @throws Exception catch Exception
      */
     private void updateData(String theStationName, final int timeInterval, final File theOut, File theIn,
-            ArrayList<SensorInterface> theDataSet) throws Exception {
+            ArrayList<SensorInterface> theDataSet, int tabNumber) throws Exception {
         final BufferedReader outRdr = new BufferedReader(new FileReader(theOut));
         final BufferedReader inRdr = new BufferedReader(new FileReader(theIn));
         String dataIn;
         String dataOut;
         while ((dataIn = inRdr.readLine()) != null && (dataOut = outRdr.readLine()) != null) {
-            String[] inDataArray = dataIn.split(" ", 2);
+            final String[] inDataArray = dataIn.split(" ", 2);
             final String[] outDataArray = dataOut.split(" ", 6);
+            String dataSent = dataOut + " " + dataIn;
             for (int i = 0; i < outDataArray.length; i++) {
                 switch (i) {
                     case 0:
@@ -84,17 +84,7 @@ public class Station {
                         break;
                 }
             }
-            System.out.println(theStationName);
-            if (theDataSet.size() > 4) {
-                for (int i = theDataSet.size() - 5; i < theDataSet.size(); i++) {
-                    System.out.println(theDataSet.get(i).getData());
-                }
-            } else {
-                for (int i = 0; i < 4; i++) {
-                    System.out.println(theDataSet.get(i).getData());
-                }
-            }
-            System.out.println();
+            theGUI.updateTab(dataSent, tabNumber);
             synchronized (this) {
                 this.wait(timeInterval);
             }
@@ -104,12 +94,13 @@ public class Station {
     }
 
     /**
-     * Create 5 threads for 5 stations
-     * Define what each thread will run based on the stationte
+     * Create 5 threads for 5 stations Define what each thread will run based on the
+     * stationte
+     * 
+     * @throws IOException
      */
-    private static void runStation() {
+    private static void runStation() throws IOException {
         final RandomSensorDataGenerator generator = new RandomSensorDataGenerator();
-        final Scanner input = new Scanner(System.in);
 
         // generate 5 set of data for 5 weather station
         for (int i = 0; i < 5; i++) {
@@ -122,9 +113,9 @@ public class Station {
 
             @Override
             public void run() {
-                Station run1 = new Station();
                 try {
-                    run1.updateData("STATION 1", UPDATE_INTERVAL_S1, new File(myFileArray[0][0]), new File(myFileArray[0][1]), myData1);
+                    Station run1 = new Station();
+                    run1.updateData("STATION 1", UPDATE_INTERVAL_S1, new File(myFileArray[0][0]), new File(myFileArray[0][1]), myData1, 1);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -137,9 +128,9 @@ public class Station {
 
             @Override
             public void run() {
-                Station run2 = new Station();
                 try {
-                    run2.updateData("STATION 2", UPDATE_INTERVAL_S2, new File(myFileArray[1][0]), new File(myFileArray[1][1]), myData2);
+                    Station run2 = new Station();
+                    run2.updateData("STATION 2", UPDATE_INTERVAL_S2, new File(myFileArray[1][0]), new File(myFileArray[1][1]), myData2, 2);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -149,11 +140,12 @@ public class Station {
 
         // Run station 3.
         final Thread station3 = new Thread() {
+
             @Override
-            public void run() {
-                Station run3 = new Station();
+            public void run() {                
                 try {
-                    run3.updateData("STATION 3", UPDATE_INTERVAL_S3, new File(myFileArray[2][0]), new File(myFileArray[2][1]), myData3);
+                    Station run3 = new Station();
+                    run3.updateData("STATION 3", UPDATE_INTERVAL_S3, new File(myFileArray[2][0]), new File(myFileArray[2][1]), myData3, 3);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -166,9 +158,9 @@ public class Station {
 
             @Override
             public void run() {
-                Station run4 = new Station();
                 try {
-                    run4.updateData("STATION 4", UPDATE_INTERVAL_S4, new File(myFileArray[3][0]), new File(myFileArray[3][1]), myData4);
+                    Station run4 = new Station();
+                    run4.updateData("STATION 4", UPDATE_INTERVAL_S4, new File(myFileArray[3][0]), new File(myFileArray[3][1]), myData4, 4);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -180,10 +172,10 @@ public class Station {
         final Thread station5 = new Thread() {
 
             @Override
-            public void run() {
-                Station run5 = new Station();
+            public void run() { 
                 try {
-                    run5.updateData("STATION 5", UPDATE_INTERVAL_S5, new File(myFileArray[4][0]), new File(myFileArray[4][1]), myData5);
+                    Station run5 = new Station();
+                    run5.updateData("STATION 5", UPDATE_INTERVAL_S5, new File(myFileArray[4][0]), new File(myFileArray[4][1]), myData5, 5);
 
                     System.out.println();
                 } catch (Exception e) {
@@ -191,26 +183,17 @@ public class Station {
                 }
             }
         };
-        //Start the station.
-        //station1.start();
+        station1.start();
+        station2.start();
+        station3.start();
+        station4.start();
+        station5.start();
 
-        System.out.print("Weather Station? ");
-        String inputNumber = input.nextLine();
-        int stationNumber = Integer.parseInt(inputNumber);
-        if (stationNumber == 1) {
-            station1.start();
-        } else if (stationNumber == 2) {
-            station2.start();
-        } else if (stationNumber == 3) {
-            station3.start();
-        } else if (stationNumber == 4) {
-            station4.start();
-        } else if (stationNumber == 5) {
-            station5.start();
-        } else {
-            System.out.println("Station number is from 1 - 5");
+        // File deletion
+        for (int i = 0; i < 5; i++) {
+            Files.delete(Paths.get(myFileArray[i][0]));
+            Files.delete(Paths.get(myFileArray[i][1]));
         }
-        input.close();
     }
 
 }

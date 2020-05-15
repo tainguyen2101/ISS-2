@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.geom.*;
+import java.util.ArrayList;
 
 /**
  * GUI class.
@@ -13,11 +14,19 @@ public class GUI {
 
     private final JTabbedPane myTabs;
 
+    private TabComponent c1, c2, c3, c4, c5;
+
+
     /**
      * Parameterless constructor.
      */
     public GUI() {
         myFrame = new JFrame("Console");
+        c1 = new TabComponent();
+        c2 = new TabComponent();
+        c3 = new TabComponent();
+        c4 = new TabComponent();
+        c5 = new TabComponent();
         myTabs = createTabs();
         setUp();
     }
@@ -27,9 +36,6 @@ public class GUI {
      * 
      * @param args
      */
-    public static void main(final String[] args) {
-        new GUI();
-    }
 
     /**
      * set up myFrame Close on exit add Tabs pane set size set visible
@@ -49,14 +55,32 @@ public class GUI {
      */
     private JTabbedPane createTabs() {
         final JTabbedPane theTabs = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
+        theTabs.addTab("Station 1", c1.getDisplay());
+        theTabs.addTab("Station 2", c2.getDisplay());
+        theTabs.addTab("Station 3", c3.getDisplay());
+        theTabs.addTab("Station 4", c4.getDisplay());
+        theTabs.addTab("Station 5", c5.getDisplay());
 
-        theTabs.addTab("Station 1", new TabComponent().getDisplay());
-        theTabs.addTab("Station 2", new TabComponent().getDisplay());
-        theTabs.addTab("Station 3", new TabComponent().getDisplay());
-        theTabs.addTab("Station 4", new TabComponent().getDisplay());
-        theTabs.addTab("Station 5", new TabComponent().getDisplay());
-        
         return theTabs;
+    }
+    public void updateTab(String data, int index) {
+        switch (index) {
+            case 1:
+                c1.updateDisplay(data);
+            case 2:
+                c2.updateDisplay(data);
+            case 3:
+                c3.updateDisplay(data);
+            case 4: 
+                c4.updateDisplay(data);
+            case 5:
+                c5.updateDisplay(data);
+        }
+        myTabs.revalidate();
+        myTabs.repaint();
+        myFrame.revalidate();
+        myFrame.repaint();
+        myFrame.pack();
     }
 
 }
@@ -200,6 +224,7 @@ class TabComponent {
 
     private JPanel myGraph;
 
+
     public TabComponent() {
         myGraphDisplay = new JPanel();
         myNumDisplay = new JPanel();
@@ -284,5 +309,108 @@ class TabComponent {
 
     public JPanel getDisplay() {
         return myDisplay;
+    }
+
+    public void updateDisplay(String data) {
+
+        String[] dataArray = data.split(" ", 8);
+
+        
+        
+        double temp = Double.parseDouble(dataArray[2]); // outside temperature
+        double windSpd = Double.parseDouble(dataArray[0]); // wind speed
+
+        double chill = 35.74 + 0.6215 * temp - (35.75 * (Math.pow(windSpd, 0.16))) 
+                + (0.4275 * temp * (Math.pow(windSpd, 0.16)));
+        
+        
+        myTemp.setText("TEMP OUT\n " + temp + "\u00B0" + "F");
+        myBaro.setText("BARO\n " + Double.parseDouble(dataArray[4]) + " in");
+        myHumid.setText("HUM OUT\n " + Double.parseDouble(dataArray[3]) + "%");
+        myRain.setText("RAIN RATE\n " + Double.parseDouble(dataArray[5]) + " in/hr");
+        myTempIn.setText("TEMP IN\n " + Double.parseDouble(dataArray[6])  + "\u00B0" + "F");
+        myHumidIn.setText("HUM IN\n " +Double.parseDouble(dataArray[7]) + "%");
+        myChill.setText("CHILL\n" + String.format("%.2f",chill) + "\u00B0" + "F");
+
+        //myGraph = new makeGraph(toArray());
+        myCompass = new makeCompass((int) windSpd, Integer.parseInt(dataArray[1]));
+        myGraphDisplay.removeAll();
+        myGraphDisplay.add(myCompass, BorderLayout.NORTH);
+        myGraphDisplay.add(myGraph, BorderLayout.SOUTH);
+
+        myGraphDisplay.setSize(myGraphDisplay.getPreferredSize());
+        myGraphDisplay.revalidate();
+        myDisplay.revalidate();
+        myGraphDisplay.repaint();
+        myDisplay.repaint();
+
+
+    }
+    
+}
+/**
+ * Class which creates and displays the data points on the graph.
+ * 
+ * @author Group 4
+ * @version Spring 2020
+ */
+class makeGraph extends JPanel {
+	
+	/**
+	 * Serialization
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Data to be used for graph. 
+	 */
+	private int[] data;
+	
+	/**
+	 * An ArrayList that stores Shape objects.
+	 */
+	private final ArrayList<Shape> shapes = new ArrayList<>();
+	
+	/**
+	 * The width of the panel.
+	 */
+	private static final int WIDTH = 300;
+
+	/**
+	 * The height of the panel.
+	 */
+	private static final int HEIGHT = 200;
+
+	/**
+	 * Parameterized constructor. 
+	 * 
+	 * @param theData to be used for the graph.
+	 */
+	public makeGraph(final int[] theData) {
+		super();
+		this.data = theData;
+		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+	}
+
+	@Override
+	public void paintComponent(final Graphics g) {
+		super.paintComponent(g);
+		final Graphics2D g2d = (Graphics2D) g;
+
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		final Shape rectangle = new Rectangle2D.Double(10, 10, getWidth() - 20, getHeight() - 20);
+		g2d.draw(rectangle);
+
+		for (int i = 0; i < 24; i++) {
+
+			if(data[i]>=0) {
+				shapes.add(new Ellipse2D.Double(((getWidth() / 24) * i) + 10, getHeight() - 16 - data[i], 5, 5));
+			}
+		}
+		for (int i = 0; i < shapes.size(); i++) {
+			g2d.fill(shapes.get(i));
+			g2d.draw(shapes.get(i));
+		}
     }
 }
