@@ -133,7 +133,6 @@ public class RandomSensorDataGenerator {
 
 		for (int i = 0; i < intervals; i++) {
 
-			printout.print((int) (milTime) + " ");
 
 			int windDirectionOffset = random.ints(-5, (5)).findFirst().getAsInt(); //Wind direction offset plus minus 5
 			mywindDirection = (360 + mywindDirection + windDirectionOffset) % 360;
@@ -180,7 +179,6 @@ public class RandomSensorDataGenerator {
 			if ((milTime - 59) % 100 == 0) {
 				milTime = milTime + 40;
 			}
-			milTime = (milTime + 1) % 2400;
 		}
 	}
 
@@ -200,7 +198,6 @@ public class RandomSensorDataGenerator {
 		}
 
 		for (int i = 0; i < intervals; i++) {
-			printin.print((int) (milTime) + " ");
 			myTempIn = (int) (50 * Math.sin(Math.PI * milTime / 1200) + 750); // InSide temp Cyclic
 			printin.print(myTempIn + " ");
 
@@ -214,7 +211,6 @@ public class RandomSensorDataGenerator {
 			if ((milTime - 59) % 100 == 0) {
 				milTime = milTime + 40;
 			}
-			milTime = (milTime + 1) % 2400;
 		}
 	}
 

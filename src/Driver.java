@@ -62,28 +62,28 @@ public class Driver {
         while ((dataIn = inRdr.readLine()) != null && (dataOut = outRdr.readLine()) != null) {
             String[] inDataArray = dataIn.split(" ", 3);
             final String[] outDataArray = dataOut.split(" ", 7);
-            for (int i = 1; i < outDataArray.length; i++) {
+            for (int i = 0; i < outDataArray.length; i++) {
                 switch (i) {
-                    case 1:
+                    case 0:
                         theDataSet.add(new WindSensor(Double.parseDouble(outDataArray[i]),
                                 Double.parseDouble(outDataArray[i + 1])));
                         break;
-                    case 3:
-                        theDataSet.add(new TemperatureSensor(Double.parseDouble(inDataArray[1]) / 10,
+                    case 2:
+                        theDataSet.add(new TemperatureSensor(Double.parseDouble(inDataArray[0]) / 10,
+                                Double.parseDouble(outDataArray[i]) / 10));
+                        break;
+                    case 4:
+                        theDataSet.add(new HumiditySensor(Double.parseDouble(inDataArray[1]) / 10,
                                 Double.parseDouble(outDataArray[i]) / 10));
                         break;
                     case 5:
-                        theDataSet.add(new HumiditySensor(Double.parseDouble(inDataArray[2]) / 10,
-                                Double.parseDouble(outDataArray[i]) / 10));
-                        break;
-                    case 6:
                         theDataSet.add(new RainSensor(Double.parseDouble(outDataArray[i]) / 100));
                         break;
                 }
             }
             System.out.println(theStationName);
             if (theDataSet.size() > 4) {
-                for (int i = theDataSet.size(); i < theDataSet.size() + 4; i++) {
+                for (int i = theDataSet.size() - 4; i < theDataSet.size(); i++) {
                     System.out.println(theDataSet.get(i).getData());
                 }
             } else {
@@ -91,7 +91,6 @@ public class Driver {
                     System.out.println(theDataSet.get(i).getData());
                 }
             }
-            theDataSet.clear();
             System.out.println();
             synchronized (this) {
                 this.wait(timeInterval);
