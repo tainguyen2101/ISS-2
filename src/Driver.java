@@ -65,13 +65,15 @@ public class Driver {
             for (int i = 0; i < outDataArray.length; i++) {
                 switch (i) {
                     case 0:
-                        theDataSet.add(new WindSensor(Double.parseDouble(outDataArray[i]),
-                                Double.parseDouble(outDataArray[i + 1])));
+                        theDataSet.add(new WindSensor(Double.parseDouble(outDataArray[i+1]),
+                                Double.parseDouble(outDataArray[i])));
                         break;
                     case 2:
                         theDataSet.add(new TemperatureSensor(Double.parseDouble(inDataArray[0]) / 10,
                                 Double.parseDouble(outDataArray[i]) / 10));
                         break;
+                    case 3:
+                        theDataSet.add(new BarometerSensor(Double.parseDouble(outDataArray[i]) / 10));
                     case 4:
                         theDataSet.add(new HumiditySensor(Double.parseDouble(inDataArray[1]) / 10,
                                 Double.parseDouble(outDataArray[i]) / 10));
@@ -83,7 +85,7 @@ public class Driver {
             }
             System.out.println(theStationName);
             if (theDataSet.size() > 4) {
-                for (int i = theDataSet.size() - 4; i < theDataSet.size(); i++) {
+                for (int i = theDataSet.size() - 5; i < theDataSet.size(); i++) {
                     System.out.println(theDataSet.get(i).getData());
                 }
             } else {
