@@ -1,5 +1,14 @@
 # TCSS 360 Project 2
 
+## May 15 2020
+
+### New
+* GUI updated with graph and compass layout
+* Inner class created to support multiple tabs displaying the same component
+
+### Future Implementation
+* A way for 5 thread to run with 5 tabs in the GUI
+
 ## May 14 2020
 
 ### New
