@@ -60,8 +60,8 @@ public class Driver {
         String dataIn;
         String dataOut;
         while ((dataIn = inRdr.readLine()) != null && (dataOut = outRdr.readLine()) != null) {
-            String[] inDataArray = dataIn.split(" ", 3);
-            final String[] outDataArray = dataOut.split(" ", 7);
+            String[] inDataArray = dataIn.split(" ", 2);
+            final String[] outDataArray = dataOut.split(" ", 6);
             for (int i = 0; i < outDataArray.length; i++) {
                 switch (i) {
                     case 0:
@@ -74,6 +74,7 @@ public class Driver {
                         break;
                     case 3:
                         theDataSet.add(new BarometerSensor(Double.parseDouble(outDataArray[i]) / 10));
+                        break;
                     case 4:
                         theDataSet.add(new HumiditySensor(Double.parseDouble(inDataArray[1]) / 10,
                                 Double.parseDouble(outDataArray[i]) / 10));
