@@ -14,7 +14,7 @@ import sensors.*;
  * Driver class.
  * @author Ford Nguyen.
  */
-public class Driver {
+public class Station {
 
     // Update time interval
     private static int UPDATE_INTERVAL_S1 = 1000; // 1 minute = 60000;
@@ -122,7 +122,7 @@ public class Driver {
 
             @Override
             public void run() {
-                Driver run1 = new Driver();
+                Station run1 = new Station();
                 try {
                     run1.updateData("STATION 1", UPDATE_INTERVAL_S1, new File(myFileArray[0][0]), new File(myFileArray[0][1]), myData1);
 
@@ -137,7 +137,7 @@ public class Driver {
 
             @Override
             public void run() {
-                Driver run2 = new Driver();
+                Station run2 = new Station();
                 try {
                     run2.updateData("STATION 2", UPDATE_INTERVAL_S2, new File(myFileArray[1][0]), new File(myFileArray[1][1]), myData2);
 
@@ -151,7 +151,7 @@ public class Driver {
         final Thread station3 = new Thread() {
             @Override
             public void run() {
-                Driver run3 = new Driver();
+                Station run3 = new Station();
                 try {
                     run3.updateData("STATION 3", UPDATE_INTERVAL_S3, new File(myFileArray[2][0]), new File(myFileArray[2][1]), myData3);
 
@@ -166,7 +166,7 @@ public class Driver {
 
             @Override
             public void run() {
-                Driver run4 = new Driver();
+                Station run4 = new Station();
                 try {
                     run4.updateData("STATION 4", UPDATE_INTERVAL_S4, new File(myFileArray[3][0]), new File(myFileArray[3][1]), myData4);
 
@@ -181,7 +181,7 @@ public class Driver {
 
             @Override
             public void run() {
-                Driver run5 = new Driver();
+                Station run5 = new Station();
                 try {
                     run5.updateData("STATION 5", UPDATE_INTERVAL_S5, new File(myFileArray[4][0]), new File(myFileArray[4][1]), myData5);
 
