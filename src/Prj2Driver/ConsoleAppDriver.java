@@ -70,9 +70,7 @@ public class ConsoleAppDriver {
 		        }
 		        
 		        //For sake of testing, print the first 5 lines of data
-		        int i = 0;
-		        while (scanner.hasNextLine() && (i < 5)) {
-		            i++;
+		        while (scanner.hasNextLine()) {
 		            System.out.println(scanner.nextLine());
 		        }
 		        

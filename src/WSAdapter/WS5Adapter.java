@@ -35,12 +35,14 @@ public class WS5Adapter {
 	 */
 	public void generateData() {
 		Scanner scanner = null;
-		PrintStream printStream = null;
+		PrintStream printStreamOutside = null;
+		PrintStream printStreamInside = null;
 
 		try {
 			File file = new File("sensor-suite-data.txt");
 			scanner = new Scanner(file);
-			printStream = new PrintStream("WeatherStation5.txt");
+			printStreamOutside = new PrintStream("WeatherStation5.txt");
+			printStreamInside = new PrintStream("WeatherStation5Inside.txt");
 		} catch (IOException exception) {
 			exception.printStackTrace();
 		}
@@ -68,14 +70,16 @@ public class WS5Adapter {
                   	for (int weatherPoint : weatherData) {
                     	result += weatherPoint + " ";
                     }
-                  	printStream.print(result + "\n");
+                  	printStreamOutside.print(result + "\n");
 				}
 			}
+			printStreamInside.print(getTempIn() + " " + getHumIn() + "\n");
 			lineNumber++;
 		}
 
 		scanner.close();
-		printStream.close();
+		printStreamOutside.close();
+		printStreamInside.close();
 	}
 
 	/**
@@ -83,7 +87,7 @@ public class WS5Adapter {
 	 * 
 	 * @return a random integer for wind direction.
 	 */
-	public int windDirection() {
+	private int windDirection() {
 		return  rand.nextInt(max + 1 - min) + min; // [1, 360]
 	}
 	
@@ -92,10 +96,28 @@ public class WS5Adapter {
 	 * 
 	 * @return a random integer for barometric pressure.
 	 */
-	public static int barometricPressure() {
+	private int barometricPressure() {
         return rand.nextInt(100);
     }
 	
+	/**
+	 * Generate the inside temperature.
+	 * 
+	 * @return a random integer for inside temperature.
+	 */
+	private int getTempIn() {
+        return rand.nextInt((750-600) + 1) + 600;
+    }
+    
+	/**
+	 * Generate the inside humidity.
+	 * 
+	 * @return a random integer for inside humidity.
+	 */
+    private int getHumIn() {
+        return rand.nextInt((550-350) + 1) + 350;
+    }
+    
 	/**
 	 * Filters the provided string input for the weather data at the end of the line.
 	 */
