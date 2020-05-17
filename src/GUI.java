@@ -25,11 +25,7 @@ public class GUI {
 	private TabComponent c1, c2, c3, c4, c5;
 
 	private static String[][] myFileArray = { { "Outside1.txt", "Inside1.txt" }, { "Outside2.txt", "Inside2.txt" },
-            { "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, { "Outside5.txt", "Inside5.txt" } };
-
-	// private ArrayList<Double> myWindSpeeds;
-	// private ArrayList<Double> myWindDirections;
-	// private ArrayList<Double> myWindDirections;
+			{ "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, { "Outside5.txt", "Inside5.txt" } };
 
 	/**
 	 * Parameterless constructor.
@@ -45,10 +41,8 @@ public class GUI {
 		c4 = new TabComponent();
 		c5 = new TabComponent();
 		myTabs = createTabs();
-		//setupPort();
 		setUp();
 	}
-	
 
 	/**
 	 * test run.
@@ -98,13 +92,13 @@ public class GUI {
 	}
 
 	public void collectWSData(int socketAddress) throws UnknownHostException, IOException {
-		//The host IP address
+		// The host IP address
 		final String host = "127.0.0.1";
-		
-		  var socket = new Socket(host, socketAddress);
-		  var in = new Scanner(socket.getInputStream());
-		  String line = in.nextLine();
-		  switch (socketAddress) {
+
+		var socket = new Socket(host, socketAddress);
+		var in = new Scanner(socket.getInputStream());
+		String line = in.nextLine();
+		switch (socketAddress) {
 			case 9876:
 				c1.updateDisplay(line);
 				break;
@@ -120,14 +114,13 @@ public class GUI {
 			case 9880:
 				c5.updateDisplay(line);
 				break;
-		  }
-			  
-		  //Close the socket and scanner, and sleep the thread
-		  in.close();
-		  
+		}
+
+		// Close the socket and scanner, and sleep the thread
+		in.close();
+
 		socket.close();
-		
-	
+
 	}
 
 }
