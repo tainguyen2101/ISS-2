@@ -10,6 +10,13 @@ import java.net.ServerSocket;
  */
 public class Station {
 
+    // Update interval for station.
+    private static int UPDATE_INTERVAL_S1 = 20;
+    private static int UPDATE_INTERVAL_S2 = 20;
+    private static int UPDATE_INTERVAL_S3 = 20;
+    private static int UPDATE_INTERVAL_S4 = 20;
+    private static int UPDATE_INTERVAL_S5 = 20;
+
     private static String[][] myFileArray = { { "Outside1.txt", "Inside1.txt" }, { "Outside2.txt", "Inside2.txt" },
             { "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, { "Outside5.txt", "Inside5.txt" } };
 
@@ -51,7 +58,7 @@ public class Station {
                                     var out1 = new PrintWriter(socket.getOutputStream(), true);
                                     out1.println(dataSent);
                                 synchronized (this) {
-                                    this.wait(1000);
+                                    this.wait(UPDATE_INTERVAL_S1);
                                 }
                             }
 
@@ -85,7 +92,7 @@ public class Station {
                                     var out1 = new PrintWriter(socket.getOutputStream(), true);
                                     out1.println(dataSent);
                                 synchronized (this) {
-                                    this.wait(1000);
+                                    this.wait(UPDATE_INTERVAL_S2);
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -117,7 +124,7 @@ public class Station {
                                     var out1 = new PrintWriter(socket.getOutputStream(), true);
                                     out1.println(dataSent);
                                 synchronized (this) {
-                                    this.wait(1000);
+                                    this.wait(UPDATE_INTERVAL_S3);
                                 }
                             }
 
@@ -151,7 +158,7 @@ public class Station {
                                     var out1 = new PrintWriter(socket.getOutputStream(), true);
                                     out1.println(dataSent);
                                 synchronized (this) {
-                                    this.wait(1000);
+                                    this.wait(UPDATE_INTERVAL_S4);
                                 }
                             }
 
@@ -185,7 +192,7 @@ public class Station {
                                     var out1 = new PrintWriter(socket.getOutputStream(), true);
                                     out1.println(dataSent);
                                 synchronized (this) {
-                                    this.wait(1000);
+                                    this.wait(UPDATE_INTERVAL_S5);
                                 }
                             }
 

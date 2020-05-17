@@ -6,8 +6,9 @@
 * Station.java run the stations
 * Driver.java main class that run
 * Data for each station is sent over a socket from Station.java and received by GUI depends on a port
-* Add 24 hours temperature graph
+* Add 24 hours temperature graph (reset everyday)
 * Add date and time
+* 30 days worth of data generated.
 
 ### Future Implementation
 * Reduce redundancy in Station java Thread method somehow.
