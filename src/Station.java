@@ -168,7 +168,7 @@ public class Station {
             }
         };
 
-        // Run station 1.
+        // Run station 5.
         final Thread station5 = new Thread() {
 
             @Override
@@ -201,7 +201,6 @@ public class Station {
                 }
             }
         };
-
 
         station1.start();
         station2.start();
