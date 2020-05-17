@@ -8,6 +8,7 @@
 * Data for each station is sent over a socket from Station.java and received by GUI depends on a port
 
 ### Future Implementation
+* Reduce redundancy on Station java Thread method somehow.
 * Date and Time display
 * Maybe moon phase
 * Graph that display 24 hours of outside temperature
