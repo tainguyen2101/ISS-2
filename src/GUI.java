@@ -8,6 +8,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -253,17 +256,15 @@ class makeGraphTemp extends JPanel {
 
 class TabComponent {
 
-	private JTextArea myTemp, myBaro, myRain, myHumid, myTempIn, myHumidIn, myChill;
+	private JTextArea myTemp, myBaro, myRain, myHumid, myTempIn, myHumidIn, myChill, myTime, myDate;
 
-	private JPanel myDisplay;
+	private JPanel myDisplay, myGraphDisplay, myNumDisplay, myCompass, myGraph;
 
-	private JPanel myGraphDisplay;
+	private LocalDateTime time, date;
 
-	private JPanel myNumDisplay;
+	private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
-	private JPanel myCompass;
-
-	private JPanel myGraph;
+	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MM/dd");
 
 	public TabComponent() {
 		myGraphDisplay = new JPanel();
@@ -313,7 +314,9 @@ class TabComponent {
 	 */
 	private JPanel createDisplayPanel() {
 		final JPanel theDisplay = new JPanel();
-
+		time = LocalDateTime.now();
+		date = LocalDateTime.now();
+		
 		myGraphDisplay.setLayout(new BorderLayout());
 		myNumDisplay.setLayout(new GridLayout(3, 3));
 		theDisplay.setLayout(new BorderLayout());
@@ -325,7 +328,11 @@ class TabComponent {
 		myTempIn = new JTextArea("TEMP IN\n <value>");
 		myHumidIn = new JTextArea("HUM IN\n <value>");
 		myChill = new JTextArea("CHILL\n <value>");
+		myTime = new JTextArea(TIME_FORMAT.format(time));
+		myDate = new JTextArea(DATE_FORMAT.format(date));
 
+		myNumDisplay.add(myDate);
+		myNumDisplay.add(myTime);
 		myNumDisplay.add(myTemp);
 		myNumDisplay.add(myBaro);
 		myNumDisplay.add(myHumid);
@@ -360,12 +367,16 @@ class TabComponent {
 		double chill = 35.74 + 0.6215 * temp - (35.75 * (Math.pow(windSpd, 0.16)))
 				+ (0.4275 * temp * (Math.pow(windSpd, 0.16)));
 
-		myTemp.setText("TEMP OUT\n " + temp + "\u00B0" + "F");
-		myBaro.setText("BARO\n " + Double.parseDouble(dataArray[4]) / 10 + " inHg");
-		myHumid.setText("HUM OUT\n " + Double.parseDouble(dataArray[3]) / 10 + "%");
-		myRain.setText("RAIN RATE\n " + Double.parseDouble(dataArray[5]) / 100 + " in/hr");
-		myTempIn.setText("TEMP IN\n " + Double.parseDouble(dataArray[6]) / 10 + "\u00B0" + "F");
-		myHumidIn.setText("HUM IN\n " + Double.parseDouble(dataArray[7]) / 10 + "%");
+		time = LocalDateTime.now();
+		date = LocalDateTime.now();
+		myTime.setText(TIME_FORMAT.format(time));
+		myDate.setText(DATE_FORMAT.format(date));
+		myTemp.setText("TEMP OUT\n" + temp + "\u00B0" + "F");
+		myBaro.setText("BARO\n" + Double.parseDouble(dataArray[4]) / 10 + " inHg");
+		myHumid.setText("HUM OUT\n" + Double.parseDouble(dataArray[3]) / 10 + "%");
+		myRain.setText("RAIN RATE\n" + Double.parseDouble(dataArray[5]) / 100 + " in/hr");
+		myTempIn.setText("TEMP IN\n" + Double.parseDouble(dataArray[6]) / 10 + "\u00B0" + "F");
+		myHumidIn.setText("HUM IN\n" + Double.parseDouble(dataArray[7]) / 10 + "%");
 		myChill.setText("CHILL\n" + String.format("%.2f", chill) + "\u00B0" + "F");
 
 		// myGraph = new makeGraph(toArray());

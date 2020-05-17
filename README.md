@@ -9,7 +9,6 @@
 
 ### Future Implementation
 * Reduce redundancy on Station java Thread method somehow.
-* Date and Time display
 * Maybe moon phase
 * Graph that display 24 hours of outside temperature
 * JUnit testing
