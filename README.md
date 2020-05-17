@@ -1,5 +1,18 @@
 # TCSS 360 Project 2
 
+## May 17 2020
+
+### New
+* Station.java run the stations
+* Driver.java main class that run
+* Data for each station is sent over a socket from Station.java and received by GUI depends on a port
+
+### Future Implementation
+* Date and Time display
+* Maybe moon phase
+* Graph that display 24 hours of outside temperature
+* JUnit testing
+
 ## May 15 2020
 
 ### New
