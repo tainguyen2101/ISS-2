@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -266,7 +265,16 @@ class TabComponent {
 
 	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MM/dd");
 
+	private int[] graphData = new int[25];
+
+	private int[] myTempData;
+
+	private int DATA_COUNT = 0;
+
+	private int GRAPH_COUNT = 0;
+
 	public TabComponent() {
+		myTempData = new int[4800];
 		myGraphDisplay = new JPanel();
 		myNumDisplay = new JPanel();
 		myDisplay = new JPanel();
@@ -316,7 +324,7 @@ class TabComponent {
 		final JPanel theDisplay = new JPanel();
 		time = LocalDateTime.now();
 		date = LocalDateTime.now();
-		
+
 		myGraphDisplay.setLayout(new BorderLayout());
 		myNumDisplay.setLayout(new GridLayout(3, 3));
 		theDisplay.setLayout(new BorderLayout());
@@ -364,6 +372,13 @@ class TabComponent {
 		double temp = Double.parseDouble(dataArray[2]) / 10; // outside temperature
 		double windSpd = Double.parseDouble(dataArray[0]); // wind speed
 
+		myTempData[DATA_COUNT] = (int) temp;
+		if (DATA_COUNT % 60 == 0) {
+			GRAPH_COUNT = GRAPH_COUNT % 24;
+			graphData[GRAPH_COUNT] = myTempData[DATA_COUNT];
+			GRAPH_COUNT++;
+		}
+		DATA_COUNT++;
 		double chill = 35.74 + 0.6215 * temp - (35.75 * (Math.pow(windSpd, 0.16)))
 				+ (0.4275 * temp * (Math.pow(windSpd, 0.16)));
 
@@ -379,7 +394,7 @@ class TabComponent {
 		myHumidIn.setText("HUM IN\n" + Double.parseDouble(dataArray[7]) / 10 + "%");
 		myChill.setText("CHILL\n" + String.format("%.2f", chill) + "\u00B0" + "F");
 
-		// myGraph = new makeGraph(toArray());
+		myGraph = new makeGraph(graphData);
 		myCompass = new makeCompass((int) windSpd, Integer.parseInt(dataArray[1]));
 		myGraphDisplay.removeAll();
 		myGraphDisplay.add(myCompass, BorderLayout.NORTH);
@@ -394,12 +409,6 @@ class TabComponent {
 
 }
 
-/**
- * Class which creates and displays the data points on the graph.
- * 
- * @author Group 4
- * @version Spring 2020
- */
 class makeGraph extends JPanel {
 
 	/**
@@ -450,7 +459,7 @@ class makeGraph extends JPanel {
 
 		for (int i = 0; i < 24; i++) {
 
-			if (data[i] >= 0) {
+			if (data[i] > 0) {
 				shapes.add(new Ellipse2D.Double(((getWidth() / 24) * i) + 10, getHeight() - 16 - data[i], 5, 5));
 			}
 		}

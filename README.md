@@ -6,11 +6,12 @@
 * Station.java run the stations
 * Driver.java main class that run
 * Data for each station is sent over a socket from Station.java and received by GUI depends on a port
+* Add 24 hours temperature graph
+* Add date and time
 
 ### Future Implementation
-* Reduce redundancy on Station java Thread method somehow.
+* Reduce redundancy in Station java Thread method somehow.
 * Maybe moon phase
-* Graph that display 24 hours of outside temperature
 * JUnit testing
 
 ## May 15 2020
