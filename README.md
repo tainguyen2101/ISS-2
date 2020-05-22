@@ -1,5 +1,14 @@
 # TCSS 360 Project 2
 
+## May 22
+
+### New
+* Added Jar file.
+
+### Future Implementation
+* JUnit testing
+
+
 ## May 17 2020
 
 ### New

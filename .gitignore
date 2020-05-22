@@ -1,1 +1,6 @@
 project2.code-workspace
+*.iml
+*.class
+*.xml
+out/production
+MANIFEST.MF
