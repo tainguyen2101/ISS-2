@@ -1,4 +1,4 @@
-package Prj2Driver;
+package Driver;
 
 import java.io.IOException;
 import java.net.UnknownHostException;

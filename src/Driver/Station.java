@@ -1,4 +1,4 @@
-package Prj2Driver;
+package Driver;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 
-//import Generator.RandomSensorDataGenerator;
-//import WSAdapter.WS1Adapter;
-import WSAdapter.WS5Adapter;
+import Adapter.WS5Adapter;
 
 /**
  * Driver class.
@@ -16,15 +14,22 @@ import WSAdapter.WS5Adapter;
  */
 public class Station {
 
-    private static String[][] myFileArray = { { "WeatherStation1.txt", "WeatherStation1Inside.txt" }, { "Outside2.txt", "Inside2.txt" },
-            { "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, { "WeatherStation5.txt", "WeatherStation5Inside.txt" } };
+    // Update interval for station.
+    private static int UPDATE_INTERVAL_S1 = 20;
+    private static int UPDATE_INTERVAL_S2 = 20;
+    private static int UPDATE_INTERVAL_S3 = 20;
+    private static int UPDATE_INTERVAL_S4 = 20;
+    private static int UPDATE_INTERVAL_S5 = 20;
+
+    private static String[][] myFileArray = { { "Outside1.txt", "Inside1.txt" }, { "Outside2.txt", "Inside2.txt" },
+            { "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, 
+            {  "WeatherStation5.txt", "WeatherStation5Inside.txt" } };
 
     // Constructor.
     public Station() throws IOException {
         runStation();
     }
-
-
+    
     /**
      * Create 5 threads for 5 stations Define what each thread will run based on the
      * stationte
@@ -33,24 +38,29 @@ public class Station {
      */
     private static void runStation() throws IOException {
         final RandomSensorDataGenerator generator = new RandomSensorDataGenerator();
-
-       	
+        
         //Weather Station 1 Code
-//        WS1Adapter adapter = new WS1Adapter();
-//        adapter.generateData();
-        
-        //Weather Station 2
-        
-        //Weather Station 3
-        
-        //Weather Station 4
-        
-        //Weather Station 5
-        WS5Adapter ws5Adapter = new WS5Adapter();
-        ws5Adapter.generateData();
-        
+//      WS1Adapter adapter = new WS1Adapter();
+//      adapter.generateData();
+      
+      //Weather Station 2 Code
+//      WS2Adapter adapter2 = new WS2Adapter();
+//      adapter2.generateData();
+      
+      //Weather Station 3 Code
+//      WS3Adapter adapter3 = new WS3Adapter();
+//      adapter3.generateData();
+      
+      //Weather Station 4 Code
+//      WS4Adapter adapter4 = new WS4Adapter();
+//      adapter4.generateData();
+      
+      //Weather Station 5 Code
+        WS5Adapter adapter5 = new WS5Adapter();
+        adapter5.generateData();
+
         // generate 5 set of data for 5 weather station
-        for (int i = 1; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             generator.createISSData(myFileArray[i][0], myFileArray[i][1]);
             generator.createEnvoyData(myFileArray[i][1]);
         }
@@ -72,7 +82,7 @@ public class Station {
                                     var out1 = new PrintWriter(socket.getOutputStream(), true);
                                     out1.println(dataSent);
                                 synchronized (this) {
-                                    this.wait(1000);
+                                    this.wait(UPDATE_INTERVAL_S1);
                                 }
                             }
 
@@ -106,7 +116,7 @@ public class Station {
                                     var out1 = new PrintWriter(socket.getOutputStream(), true);
                                     out1.println(dataSent);
                                 synchronized (this) {
-                                    this.wait(1000);
+                                    this.wait(UPDATE_INTERVAL_S2);
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -138,7 +148,7 @@ public class Station {
                                     var out1 = new PrintWriter(socket.getOutputStream(), true);
                                     out1.println(dataSent);
                                 synchronized (this) {
-                                    this.wait(1000);
+                                    this.wait(UPDATE_INTERVAL_S3);
                                 }
                             }
 
@@ -172,7 +182,7 @@ public class Station {
                                     var out1 = new PrintWriter(socket.getOutputStream(), true);
                                     out1.println(dataSent);
                                 synchronized (this) {
-                                    this.wait(1000);
+                                    this.wait(UPDATE_INTERVAL_S4);
                                 }
                             }
 
@@ -206,7 +216,7 @@ public class Station {
                                     var out1 = new PrintWriter(socket.getOutputStream(), true);
                                     out1.println(dataSent);
                                 synchronized (this) {
-                                    this.wait(1000);
+                                    this.wait(UPDATE_INTERVAL_S5);
                                 }
                             }
 

@@ -5,7 +5,7 @@
  * Professor Dincer
  */
 
-package WSAdapter;
+package Adapter;
 
 import java.io.File;
 import java.io.IOException;

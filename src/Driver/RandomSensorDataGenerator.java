@@ -2,7 +2,7 @@
  * Generate artificial sensor data to be analyzed and displayed on console.
  */
 
-package Prj2Driver;
+package Driver;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -45,7 +45,7 @@ public class RandomSensorDataGenerator {
 	/**
 	 * How often the program prints the data to the lists.
 	 */
-	public static int intervals = 2400;   /// Interval is how many data point the Program prints to lists and represents minutes. 2400 hrs = 1 day of data.
+	public static int intervals = 72000;   /// Interval is how many data point the Program prints to lists and represents minutes. 2400 hrs = 1 day of data.
 
 	/**
 	 * Variable to store military time.

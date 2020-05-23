@@ -1,7 +1,7 @@
 /**
  * 
  */
-package WSAdapter;
+package Adapter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,7 +32,7 @@ class WS5AdapterTest {
     }
 
 	/**
-	 * Test method for {@link WSAdapter.WS5Adapter#generateData()}.
+	 * Test method for {@link Adapter.WS5Adapter#generateData()}.
 	 */
 	@Test
 	void testGenerateData() throws IOException {
@@ -45,7 +45,7 @@ class WS5AdapterTest {
 	
 
 	/**
-	 * Test method for {@link WSAdapter.WS5Adapter#filterWord(java.lang.String)}.
+	 * Test method for {@link Adapter.WS5Adapter#filterWord(java.lang.String)}.
 	 */
 	@Test
 	void testFilterWord() {

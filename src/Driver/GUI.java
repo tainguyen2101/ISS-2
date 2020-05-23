@@ -1,4 +1,4 @@
-package Prj2Driver;
+package Driver;
 
 import java.awt.*;
 import javax.swing.*;
@@ -28,7 +28,8 @@ public class GUI {
 	private TabComponent c1, c2, c3, c4, c5;
 
 	private static String[][] myFileArray = { { "Outside1.txt", "Inside1.txt" }, { "Outside2.txt", "Inside2.txt" },
-			{ "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, { "Outside5.txt", "Inside5.txt" } };
+			{ "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, 
+			{  "WeatherStation5.txt", "WeatherStation5Inside.txt" } };
 
 	/**
 	 * Parameterless constructor.
@@ -268,14 +269,13 @@ class TabComponent {
 
 	private int[] graphData = new int[25];
 
-	private int[] myTempData;
+	private int[] myTempData = new int[4800];
 
 	private int DATA_COUNT = 0;
 
 	private int GRAPH_COUNT = 0;
 
 	public TabComponent() {
-		myTempData = new int[4800];
 		myGraphDisplay = new JPanel();
 		myNumDisplay = new JPanel();
 		myDisplay = new JPanel();
@@ -375,6 +375,11 @@ class TabComponent {
 
 		myTempData[DATA_COUNT] = (int) temp;
 		if (DATA_COUNT % 60 == 0) {
+			if (GRAPH_COUNT == 24) {
+				for (int i = 0; i < 25; i++) {
+					graphData[i] = 0;
+				}
+			}
 			GRAPH_COUNT = GRAPH_COUNT % 24;
 			graphData[GRAPH_COUNT] = myTempData[DATA_COUNT];
 			GRAPH_COUNT++;
