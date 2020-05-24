@@ -1,6 +1,10 @@
-/**
- * 
+/*
+ * Melinda Tran
+ * 5/2/20
+ * TCSS 360 Software Development
+ * Professor Dincer
  */
+
 package Adapter;
 
 import static org.junit.Assert.assertEquals;
@@ -13,10 +17,10 @@ import java.nio.file.Path;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import views.WeatherEnvoy;
-
 /**
- * @author tranm
+ * JUnit test cases for WS5Adapter
+ * 
+ * @author mtran36
  *
  */
 class WS5AdapterTest {
@@ -41,8 +45,6 @@ class WS5AdapterTest {
 		assertTrue(Files.isReadable(Path.of("WeatherStation5.txt")));
 		assertTrue(Files.isReadable(Path.of("WeatherStation5Inside.txt")));
 	}
-	
-	
 
 	/**
 	 * Test method for {@link Adapter.WS5Adapter#filterWord(java.lang.String)}.

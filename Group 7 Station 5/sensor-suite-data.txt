@@ -1,6 +1,0 @@
-Wireless Vantage Pro2 Console Receivers
-rainfall (inches): 42
-temperature (fahrenheit): 82
-humidity (percentage): 21
-wind speed (miles per hour): 35
-

@@ -1,9 +1,27 @@
+/*
+ * Group 2
+ * 5/20/20
+ * TCSS 360 Software Development
+ * Professor Dincer
+ */
+
 package Driver;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
 
+/**
+ * Driver class.
+ * 
+ * @author Ford Nguyen
+ */
 public class Driver {
+	
+    /**
+     * Main method for this application.
+     * 
+     * @param theArgs argument for main method.
+     */
     public static void main(String[] args) throws UnknownHostException, IOException {
         new Station();
         GUI test = new GUI();

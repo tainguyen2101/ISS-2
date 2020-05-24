@@ -1,3 +1,10 @@
+/*
+ * Group 2
+ * 5/20/20
+ * TCSS 360 Software Development
+ * Professor Dincer
+ */
+
 package Driver;
 
 import java.io.BufferedReader;
@@ -10,21 +17,34 @@ import Adapter.WS1Adapter;
 import Adapter.WS5Adapter;
 
 /**
- * Driver class.
+ * Station class.
+ * 
  * @author Ford Nguyen.
  */
 public class Station {
 
     // Update interval for station.
+	
+    /** UPDATE_INTERVAL_S1 is a field containing an int. */
     private static int UPDATE_INTERVAL_S1 = 20;
+    
+    /** UPDATE_INTERVAL_S2 is a field containing an int. */
     private static int UPDATE_INTERVAL_S2 = 20;
+    
+    /** UPDATE_INTERVAL_S3 is a field containing an int. */
     private static int UPDATE_INTERVAL_S3 = 20;
+    
+    /** UPDATE_INTERVAL_S4 is a field containing an int. */
     private static int UPDATE_INTERVAL_S4 = 20;
-    private static int UPDATE_INTERVAL_S5 = 20;
+    
+    /** UPDATE_INTERVAL_S5 is a field containing an int. */
+    private static int UPDATE_INTERVAL_S5 = 1000;
 
+    /** myFileArray is a field containing a 2d array. */
     private static String[][] myFileArray = { { "WeatherStation1.txt", "WeatherStation1Inside.txt" }, 
     		{ "Outside2.txt", "Inside2.txt" },
-            { "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, 
+            { "Outside3.txt", "Inside3.txt" }, 
+            { "Outside4.txt", "Inside4.txt" }, 
             {  "WeatherStation5.txt", "WeatherStation5Inside.txt" } };
 
     // Constructor.
@@ -140,8 +160,8 @@ public class Station {
             public void run() {
                 try (var listener = new ServerSocket(9878)) {
                     while (true) {
-                            final BufferedReader outRdr = new BufferedReader(new FileReader(myFileArray[0][0]));
-                            final BufferedReader inRdr = new BufferedReader(new FileReader(myFileArray[0][1]));
+                            final BufferedReader outRdr = new BufferedReader(new FileReader(myFileArray[2][0]));
+                            final BufferedReader inRdr = new BufferedReader(new FileReader(myFileArray[2][1]));
                             String dataIn;
                             String dataOut;
                             while ((dataIn = inRdr.readLine()) != null && (dataOut = outRdr.readLine()) != null) {
@@ -174,8 +194,8 @@ public class Station {
             public void run() {
                 try (var listener = new ServerSocket(9879)) {
                     while (true) {
-                            final BufferedReader outRdr = new BufferedReader(new FileReader(myFileArray[0][0]));
-                            final BufferedReader inRdr = new BufferedReader(new FileReader(myFileArray[0][1]));
+                            final BufferedReader outRdr = new BufferedReader(new FileReader(myFileArray[3][0]));
+                            final BufferedReader inRdr = new BufferedReader(new FileReader(myFileArray[3][1]));
                             String dataIn;
                             String dataOut;
                             while ((dataIn = inRdr.readLine()) != null && (dataOut = outRdr.readLine()) != null) {
@@ -201,22 +221,24 @@ public class Station {
             }
         };
 
-        // Run station 5.
+     // Run station 5.
         final Thread station5 = new Thread() {
 
             @Override
             public void run() {
                 try (var listener = new ServerSocket(9880)) {
                     while (true) {
-                            final BufferedReader outRdr = new BufferedReader(new FileReader(myFileArray[0][0]));
-                            final BufferedReader inRdr = new BufferedReader(new FileReader(myFileArray[0][1]));
+                            final BufferedReader outRdr = new BufferedReader(new FileReader(myFileArray[4][0]));
+                            final BufferedReader inRdr = new BufferedReader(new FileReader(myFileArray[4][1]));
                             String dataIn;
                             String dataOut;
                             while ((dataIn = inRdr.readLine()) != null && (dataOut = outRdr.readLine()) != null) {
-                                String dataSent = dataOut + " " + dataIn;
+                                StringBuffer dataSent = new StringBuffer();
+                                dataSent.append(dataOut);
+                                dataSent.append(dataIn);
                                 try (var socket = listener.accept()) {
                                     var out1 = new PrintWriter(socket.getOutputStream(), true);
-                                    out1.println(dataSent);
+                                    out1.println(dataSent.toString());
                                 synchronized (this) {
                                     this.wait(UPDATE_INTERVAL_S5);
                                 }

@@ -14,7 +14,8 @@ public class SensorSuite implements Observable {
     private List<Sensor> sensors;
     private String data;
 
-    public static final int INTERVAL = 2500;
+//    public static final int INTERVAL = 2500;
+    public static final int INTERVAL = 1;
 
     public SensorSuite() {
         observers = new LinkedList<>();

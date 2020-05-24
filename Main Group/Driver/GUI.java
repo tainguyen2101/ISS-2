@@ -1,3 +1,10 @@
+/*
+ * Group 2
+ * 5/20/20
+ * TCSS 360 Software Development
+ * Professor Dincer
+ */
+
 package Driver;
 
 import java.awt.*;
@@ -29,7 +36,8 @@ public class GUI {
 
 	private static String[][] myFileArray = { { "WeatherStation1.txt", "WeatherStation1Inside.txt" }, 
 			{ "Outside2.txt", "Inside2.txt" },
-			{ "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, 
+			{ "Outside3.txt", "Inside3.txt" }, 
+			{ "Outside4.txt", "Inside4.txt" }, 
 			{  "WeatherStation5.txt", "WeatherStation5Inside.txt" } };
 
 	/**
@@ -72,8 +80,20 @@ public class GUI {
 					e2.printStackTrace();
 				}
 			}
-
 		});
+
+//		myFrame.addWindowListener((WindowAdapter) windowClosing(e) -> {
+//			try {
+//				for (int i = 0; i < 5; i++) {
+//					Files.delete(Paths.get(myFileArray[i][0]));
+//					Files.delete(Paths.get(myFileArray[i][1]));
+//				}
+//				System.exit(status);
+//			} catch (IOException e2) {
+//				e2.printStackTrace();
+//			}
+//		});
+		
 		myFrame.add(myTabs);
 		myFrame.setSize(new Dimension(800, 450));
 		myFrame.pack();
@@ -270,7 +290,7 @@ class TabComponent {
 
 	private int[] graphData = new int[25];
 
-	private int[] myTempData = new int[4800];
+	private int[] myTempData = new int[72000];
 
 	private int DATA_COUNT = 0;
 
