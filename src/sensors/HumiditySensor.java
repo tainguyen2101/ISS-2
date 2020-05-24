@@ -93,7 +93,7 @@ public class HumiditySensor implements SensorInterface {
         String inString = HUM_FORMAT.format(innerHum);
         String outString = HUM_FORMAT.format(outerHum);
         
-        return "{innerHumidty: " + inString + "%, outerHumidity: " + outString + "%}";
+        return "{innerHumidity: " + inString + "%, outerHumidity: " + outString + "%}";
     }
     
     /**

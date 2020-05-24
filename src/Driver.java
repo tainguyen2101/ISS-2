@@ -1,3 +1,6 @@
+import GUI.GUI;
+import Stations.Station;
+
 import java.io.IOException;
 import java.net.UnknownHostException;
 
@@ -12,7 +15,6 @@ public class Driver {
             test.collectWSData(9879);
             test.collectWSData(9880);
         }
-        
     }
 
 }

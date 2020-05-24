@@ -1,5 +1,10 @@
 # TCSS 360 Project 2
 
+## May 24
+
+### New
+* JUnit tested (94%)
+
 ## May 22
 
 ### New
@@ -12,24 +17,24 @@
 ## May 17 2020
 
 ### New
-* Station.java run the stations
+* Stations.Station.java run the stations
 * Driver.java main class that run
-* Data for each station is sent over a socket from Station.java and received by GUI depends on a port
+* Data for each station is sent over a socket from Stations.Station.java and received by GUI.GUI depends on a port
 * Add 24 hours temperature graph (reset everyday)
 * Add date and time
 * 30 days worth of data generated.
 
 ### Future Implementation
-* Reduce redundancy in Station java Thread method somehow.
+* Reduce redundancy in Stations.Station java Thread method somehow.
 * Maybe moon phase
 * JUnit testing
 
 ## May 15 2020
 
 ### New
-* GUI updated with graph and compass layout
-* GUI is updated by a thread through a method
-* 5 Thread running and update the 5 tabs on GUI
+* GUI.GUI updated with graph and compass layout
+* GUI.GUI is updated by a thread through a method
+* 5 Thread running and update the 5 tabs on GUI.GUI
 
 ### Future Implementation
 * Format the data (data right now come in raw eg. 100 200, need to be divided by 10 or 100)
@@ -39,7 +44,7 @@
 
 ### New
 * runStation() for 5 thread and user input. This decouple and simplify main method.
-* Layout for GUI created.
+* Layout for GUI.GUI created.
 * Add Barometric sensor.
 
 ## May 13 2020 Update 2
@@ -49,9 +54,9 @@
 * Allow user to choose a weather station to run instead of all at the same time.
 
 ### Future Implementation
-* GUI that has a side menu for user to choose which weather station to display
+* GUI.GUI that has a side menu for user to choose which weather station to display
 * Be able to sent data through a socket from ISS to Console
-* GUI received data from 5 weather station simultaniously through different socket
+* GUI.GUI received data from 5 weather station simultaniously through different socket
 
 ## May 13 2020
 

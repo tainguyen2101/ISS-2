@@ -1,3 +1,4 @@
+package GUI;
 
 import java.awt.*;
 import javax.swing.*;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * GUI class.
+ * GUI.GUI class.
  * 
  * @author Ford Nguyen
  */
@@ -128,9 +129,9 @@ public class GUI {
 }
 
 /**
- * Create the compass to display on the GUI.
+ * Create the compass to display on the GUI.GUI.
  * 
- * @author Group 4
+ * @author Group 2
  * @version Spring 2020
  */
 class makeCompass extends JPanel {
@@ -213,7 +214,7 @@ class makeCompass extends JPanel {
 }
 
 /**
- * Create the graph to display on the GUI.
+ * Create the graph to display on the GUI.GUI.
  * 
  * @author Group 4
  * @version Spring 2020
@@ -267,7 +268,7 @@ class TabComponent {
 
 	private int[] graphData = new int[25];
 
-	private int[] myTempData = new int[4800];
+	private int[] myTempData = new int[72000];
 
 	private int DATA_COUNT = 0;
 
