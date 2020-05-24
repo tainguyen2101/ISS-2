@@ -27,7 +27,8 @@ public class GUI {
 
 	private TabComponent c1, c2, c3, c4, c5;
 
-	private static String[][] myFileArray = { { "Outside1.txt", "Inside1.txt" }, { "Outside2.txt", "Inside2.txt" },
+	private static String[][] myFileArray = { { "WeatherStation1.txt", "WeatherStation1Inside.txt" }, 
+			{ "Outside2.txt", "Inside2.txt" },
 			{ "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, 
 			{  "WeatherStation5.txt", "WeatherStation5Inside.txt" } };
 

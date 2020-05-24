@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 
+import Adapter.WS1Adapter;
 import Adapter.WS5Adapter;
 
 /**
@@ -21,7 +22,8 @@ public class Station {
     private static int UPDATE_INTERVAL_S4 = 20;
     private static int UPDATE_INTERVAL_S5 = 20;
 
-    private static String[][] myFileArray = { { "Outside1.txt", "Inside1.txt" }, { "Outside2.txt", "Inside2.txt" },
+    private static String[][] myFileArray = { { "WeatherStation1.txt", "WeatherStation1Inside.txt" }, 
+    		{ "Outside2.txt", "Inside2.txt" },
             { "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, 
             {  "WeatherStation5.txt", "WeatherStation5Inside.txt" } };
 
@@ -40,8 +42,8 @@ public class Station {
         final RandomSensorDataGenerator generator = new RandomSensorDataGenerator();
         
         //Weather Station 1 Code
-//      WS1Adapter adapter = new WS1Adapter();
-//      adapter.generateData();
+        WS1Adapter adapter = new WS1Adapter();
+        adapter.generateData();
       
       //Weather Station 2 Code
 //      WS2Adapter adapter2 = new WS2Adapter();
@@ -60,7 +62,7 @@ public class Station {
         adapter5.generateData();
 
         // generate 5 set of data for 5 weather station
-        for (int i = 0; i < 5; i++) {
+        for (int i = 1; i < 4; i++) {
             generator.createISSData(myFileArray[i][0], myFileArray[i][1]);
             generator.createEnvoyData(myFileArray[i][1]);
         }
