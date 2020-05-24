@@ -1,9 +1,11 @@
 package GUI;
 
-import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
-import java.awt.geom.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -16,27 +18,33 @@ import java.util.Scanner;
 
 /**
  * GUI.GUI class.
- * 
+ *
  * @author Ford Nguyen
  */
 public class GUI {
 
+	/**
+	 * Double string array storing name of data files.
+	 */
+	private final static String[][] myFileArray = {{"Outside1.txt", "Inside1.txt"}, {"Outside2.txt", "Inside2.txt"},
+			{"Outside3.txt", "Inside3.txt"}, {"Outside4.txt", "Inside4.txt"}, {"Outside5.txt", "Inside5.txt"}};
+	/**
+	 * the Frame.
+	 */
 	private final JFrame myFrame;
-
+	/**
+	 * the Tabs.
+	 */
 	private final JTabbedPane myTabs;
-
-	private TabComponent c1, c2, c3, c4, c5;
-
-	private static String[][] myFileArray = { { "Outside1.txt", "Inside1.txt" }, { "Outside2.txt", "Inside2.txt" },
-			{ "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, { "Outside5.txt", "Inside5.txt" } };
+	/**
+	 * Tab components for the 5 weather staions.
+	 */
+	private final TabComponent c1, c2, c3, c4, c5;
 
 	/**
-	 * Parameterless constructor.
-	 * 
-	 * @throws IOException
-	 * @throws UnknownHostException
+	 * Parameter-less constructor.
 	 */
-	public GUI() throws UnknownHostException, IOException {
+	public GUI() {
 		myFrame = new JFrame("Console");
 		c1 = new TabComponent();
 		c2 = new TabComponent();
@@ -47,11 +55,6 @@ public class GUI {
 		setUp();
 	}
 
-	/**
-	 * test run.
-	 * 
-	 * @param args
-	 */
 
 	/**
 	 * set up myFrame Close on exit add Tabs pane set size set visible
@@ -94,6 +97,14 @@ public class GUI {
 		return theTabs;
 	}
 
+	/**
+	 * Collect data from the server opened by stations.
+	 * update data depending on the socket.
+	 *
+	 * @param socketAddress port number.
+	 * @throws UnknownHostException Unknown Host.
+	 * @throws IOException          IOException.
+	 */
 	public void collectWSData(int socketAddress) throws UnknownHostException, IOException {
 		// The host IP address
 		final String host = "127.0.0.1";
@@ -157,11 +168,6 @@ class makeCompass extends JPanel {
 	private final String windSpeed;
 
 	/**
-	 * Variable to store radian value when converted from degrees.
-	 */
-	private final double radian;
-
-	/**
 	 * The x-value in the data point.
 	 */
 	private final double x;
@@ -182,7 +188,7 @@ class makeCompass extends JPanel {
 		super();
 		this.windSpeed = Integer.toString(theSpeed);
 
-		radian = ((450 - theDirection) % 360) * Math.PI / 180; // converts compass degrees to radians
+		double radian = ((450 - theDirection) % 360) * Math.PI / 180; // converts compass degrees to radians
 		x = 80 * Math.cos(radian); // Radius=80
 		y = 80 * Math.sin(radian);
 
@@ -194,13 +200,13 @@ class makeCompass extends JPanel {
 		super.paintComponent(g);
 		final Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		final Shape circle = new Ellipse2D.Double(getWidth() / 8, 0, getHeight(), getHeight());
-		final Shape circle2 = new Ellipse2D.Double((getWidth() / 8) + 14, 14, getHeight() - 28, getHeight() - 28);
+		final Shape circle = new Ellipse2D.Double(getWidth() >> 3, 0, getHeight(), getHeight());
+		final Shape circle2 = new Ellipse2D.Double((getWidth() >> 3) + 14, 14, getHeight() - 28, getHeight() - 28);
 		g2d.draw(circle);
 		g2d.draw(circle2);
 
 		g2d.drawString("o", (getWidth() / 2 - 16) + (int) x, getHeight() / 2 + 5 - (int) y); /// Need to add better
-																								/// image for pointer
+		/// image for pointer
 
 		g2d.drawString("Wind", 10, 15);
 		g2d.drawString("N", getWidth() / 2 - 16, 12);
@@ -215,8 +221,8 @@ class makeCompass extends JPanel {
 
 /**
  * Create the graph to display on the GUI.GUI.
- * 
- * @author Group 4
+ *
+ * @author Group 2
  * @version Spring 2020
  */
 class makeGraphTemp extends JPanel {
@@ -258,17 +264,19 @@ class TabComponent {
 
 	private JTextArea myTemp, myBaro, myRain, myHumid, myTempIn, myHumidIn, myChill, myTime, myDate;
 
-	private JPanel myDisplay, myGraphDisplay, myNumDisplay, myCompass, myGraph;
+	private final int[] graphData = new int[25];
+	private final int[] myTempData = new int[72000];
+	private JPanel myDisplay;
+	private JPanel myGraphDisplay;
+	private JPanel myNumDisplay;
 
 	private LocalDateTime time, date;
 
 	private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
 	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MM/dd");
-
-	private int[] graphData = new int[25];
-
-	private int[] myTempData = new int[72000];
+	private JPanel myCompass;
+	private JPanel myGraph;
 
 	private int DATA_COUNT = 0;
 
@@ -424,7 +432,7 @@ class makeGraph extends JPanel {
 	/**
 	 * Data to be used for graph.
 	 */
-	private int[] data;
+	private final int[] data;
 
 	/**
 	 * An ArrayList that stores Shape objects.
@@ -468,9 +476,9 @@ class makeGraph extends JPanel {
 				shapes.add(new Ellipse2D.Double(((getWidth() / 24) * i) + 10, getHeight() - 16 - data[i], 5, 5));
 			}
 		}
-		for (int i = 0; i < shapes.size(); i++) {
-			g2d.fill(shapes.get(i));
-			g2d.draw(shapes.get(i));
+		for (Shape shape : shapes) {
+			g2d.fill(shape);
+			g2d.draw(shape);
 		}
 	}
 

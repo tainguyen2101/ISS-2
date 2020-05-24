@@ -1,36 +1,40 @@
 package Stations;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Driver class.
+ *
  * @author Ford Nguyen.
  */
 public class Station {
 
     // Update interval for station.
     private static final int UPDATE_INTERVAL_S1 = 20;
-    private static final int UPDATE_INTERVAL_S2 = 1000;
-    private static final int UPDATE_INTERVAL_S3 = 10000;
-    private static final int UPDATE_INTERVAL_S4 = 4000;
-    private static final int UPDATE_INTERVAL_S5 = 6000;
+    private static final int UPDATE_INTERVAL_S2 = 20;
+    private static final int UPDATE_INTERVAL_S3 = 20;
+    private static final int UPDATE_INTERVAL_S4 = 20;
+    private static final int UPDATE_INTERVAL_S5 = 20;
 
-    private static final String[][] myFileArray = { { "Outside1.txt", "Inside1.txt" }, { "Outside2.txt", "Inside2.txt" },
-            { "Outside3.txt", "Inside3.txt" }, { "Outside4.txt", "Inside4.txt" }, { "Outside5.txt", "Inside5.txt" } };
+    private static final String[][] myFileArray = {{"Outside1.txt", "Inside1.txt"}, {"Outside2.txt", "Inside2.txt"},
+            {"Outside3.txt", "Inside3.txt"}, {"Outside4.txt", "Inside4.txt"}, {"Outside5.txt", "Inside5.txt"}};
 
-    // Constructor.
-    public Station() throws IOException {
+    /**
+     * Constructor.
+     */
+    public Station() {
         runStation();
     }
 
     /**
      * Create 5 threads for 5 stations Define what each thread will run based on the.
-     * stationte
-     * 
-     * @throws IOException IO exception.
+     * station.
      */
-    private static void runStation() throws IOException {
+    private static void runStation() {
         final RandomSensorDataGenerator generator = new RandomSensorDataGenerator();
 
         // generate 5 set of data for 5 weather station
@@ -63,7 +67,7 @@ public class Station {
                             catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        } 
+                            }
                         outRdr.close();
                         inRdr.close();
                     }
@@ -185,22 +189,20 @@ public class Station {
                             String dataIn;
                             String dataOut;
                             while ((dataIn = inRdr.readLine()) != null && (dataOut = outRdr.readLine()) != null) {
-                                StringBuffer dataSent = new StringBuffer();
-                                dataSent.append(dataOut);
-                                dataSent.append(" ");
-                                dataSent.append(dataIn);
+                                AtomicReference<StringBuilder> dataSent = new AtomicReference<>(new StringBuilder());
+                                dataSent.get().append(dataOut);
+                                dataSent.get().append(" ");
+                                dataSent.get().append(dataIn);
                                 try (var socket = listener.accept()) {
                                     var out1 = new PrintWriter(socket.getOutputStream(), true);
                                     out1.println(dataSent.toString());
-                                synchronized (this) {
-                                    this.wait(UPDATE_INTERVAL_S5);
+                                    synchronized (this) {
+                                        this.wait(UPDATE_INTERVAL_S5);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
                             }
-
-                            catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        } 
                         outRdr.close();
                         inRdr.close();
                     }

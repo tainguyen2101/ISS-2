@@ -1,22 +1,19 @@
 package JUnit;
 
 import GUI.GUI;
-import Stations.RandomSensorDataGenerator;
 import Stations.Station;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Driver;
-import java.util.Objects;
-import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test Station and GUI.
+ *
+ * @author Ford Nguyen
+ */
 class StationTest {
 
     @Test

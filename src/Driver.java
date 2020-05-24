@@ -2,10 +2,9 @@ import GUI.GUI;
 import Stations.Station;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 public class Driver {
-    public static void main(String[] args) throws UnknownHostException, IOException {
+    public static void main(String[] args) throws IOException {
         new Station();
         GUI test = new GUI();
         while (true) {
